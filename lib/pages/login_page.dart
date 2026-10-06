@@ -24,12 +24,18 @@ class _LoginPageState extends State<LoginPage> {
   // ==========================================
 
   Widget _buildSeletor() {
+    final bool professorSelecionado = tipoUsuario == 'Professor';
+
     return Container(
-      height: 55,
-      padding: const EdgeInsets.all(5),
+      height: 45,
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
+        // Borda laranja no modo Professor
+        border: professorSelecionado
+            ? Border.all(color: const Color(0xFFF29C00), width: 1)
+            : null,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.08),
@@ -85,11 +91,11 @@ class _LoginPageState extends State<LoginPage> {
                         child: AnimatedDefaultTextStyle(
                           duration: const Duration(milliseconds: 300),
                           style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w300,
                             color: tipoUsuario == 'Aluno'
                                 ? Colors.white
-                                : const Color(0xFF244977),
+                                : const Color(0xFFF29C00),
                           ),
                           child: const Text('Aluno'),
                         ),
@@ -110,8 +116,8 @@ class _LoginPageState extends State<LoginPage> {
                         child: AnimatedDefaultTextStyle(
                           duration: const Duration(milliseconds: 300),
                           style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w300,
                             color: tipoUsuario == 'Professor'
                                 ? Colors.white
                                 : const Color(0xFFF29C00),
@@ -145,14 +151,31 @@ class _LoginPageState extends State<LoginPage> {
     // CORES
     // ==========================================
 
-    final Color corFundo =
-        professorSelecionado ? const Color(0xFFF29C00) : Colors.white;
+    const Color azul = Color(0xFF244977);
+    const Color laranja = Color(0xFFF29C00);
 
-    final Color corPrincipal = const Color(0xFF244977);
+    // Fundo laranja no modo Professor
+    final Color corFundo = professorSelecionado ? laranja : Colors.white;
 
-    final Color corBorda = professorSelecionado
-        ? const Color(0xFF244977)
-        : const Color(0xFFF29C00);
+    // Borda dos campos: azul no Professor, laranja no Aluno
+    final Color corBorda = professorSelecionado ? azul : laranja;
+
+    // Texto digitado e dica dos campos (laranja no Professor)
+    final Color corTextoCampo = professorSelecionado ? laranja : azul;
+    final Color corHint = professorSelecionado ? laranja : Colors.grey;
+
+    // ==========================================
+    // BOTÃO "ACESSAR" E "CADASTRAR"
+    // ==========================================
+
+    // Professor: sem fundo, borda branca, texto branco
+    // Aluno: fundo azul, texto branco
+    final Color corBotaoFundo = professorSelecionado ? Colors.transparent : azul;
+    final Color corBotaoBorda = professorSelecionado ? Colors.white : azul;
+    final Color corBotaoTexto = Colors.white;
+
+    // "Cadastrar": branco no Professor, azul no Aluno
+    final Color corCadastrar = professorSelecionado ? Colors.white : azul;
 
     return SafeArea(
       child: Scaffold(
@@ -167,6 +190,12 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.fromLTRB(40, 40, 40, 40),
               child: Column(
                 children: [
+                  // ==========================================
+                  // ESPAÇO EXTRA PARA DESCER O LOGO
+                  // ==========================================
+
+                  const SizedBox(height: 30),
+
                   // ==========================================
                   // LOGO (troca conforme Aluno / Professor)
                   // ==========================================
@@ -212,28 +241,23 @@ class _LoginPageState extends State<LoginPage> {
                         child: child,
                       );
                     },
-                    child: Text(
-                      professorSelecionado
-                          ? 'Login do Professor'
-                          : 'Login do Aluno',
-                      key: ValueKey(tipoUsuario),
-                      style: GoogleFonts.inter(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        color: corPrincipal,
-                      ),
-                    ),
+  
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 120),
 
                   // ==========================================
                   // SELETOR ALUNO / PROFESSOR (acima do e-mail)
                   // ==========================================
 
-                  _buildSeletor(),
+                  Center(
+                    child: SizedBox(
+                      width: 190,
+                      child: _buildSeletor(),
+                    ),
+                  ),
 
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 15),
 
                   // ==========================================
                   // EMAIL
@@ -242,18 +266,18 @@ class _LoginPageState extends State<LoginPage> {
                   TextField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(
-                      color: Color(0xFF244977),
+                    style: TextStyle(
+                      color: corTextoCampo,
                       fontSize: 16,
                     ),
                     decoration: InputDecoration(
                       hintText: 'Digite seu e-mail',
-                      hintStyle: const TextStyle(color: Colors.grey),
+                      hintStyle: TextStyle(color: corHint),
                       filled: true,
                       fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 20,
-                        vertical: 15,
+                        vertical: 10,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(53),
@@ -266,7 +290,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
 
                   // ==========================================
                   // SENHA
@@ -275,18 +299,18 @@ class _LoginPageState extends State<LoginPage> {
                   TextField(
                     controller: senhaController,
                     obscureText: true,
-                    style: const TextStyle(
-                      color: Color(0xFF244977),
+                    style: TextStyle(
+                      color: corTextoCampo,
                       fontSize: 16,
                     ),
                     decoration: InputDecoration(
                       hintText: 'Digite sua senha',
-                      hintStyle: const TextStyle(color: Colors.grey),
+                      hintStyle: TextStyle(color: corHint),
                       filled: true,
                       fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 20,
-                        vertical: 15,
+                        vertical: 10,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(53),
@@ -299,15 +323,15 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
 
                   // ==========================================
                   // BOTÃO LOGIN
                   // ==========================================
 
                   SizedBox(
-                    width: double.infinity,
-                    height: 55,
+                    width: 165,
+                    height: 37,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -318,24 +342,27 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: corPrincipal,
+                        backgroundColor: corBotaoFundo, // ALTERADO
                         elevation: 0,
+                        shadowColor: Colors.transparent,
+                        // ALTERADO: borda branca no Professor
+                        side: BorderSide(color: corBotaoBorda, width: 1),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(50),
                         ),
                       ),
                       child: Text(
-                        'LOGIN',
+                        'Acessar',
                         style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300,
+                          color: corBotaoTexto, // ALTERADO
                         ),
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
 
                   // ==========================================
                   // CADASTRO
@@ -348,11 +375,10 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       'Cadastrar',
                       style: GoogleFonts.inter(
-                        fontSize: 18,
+                        fontSize: 13,
                         fontWeight: FontWeight.w500,
-                        color: corPrincipal,
-                        decoration: TextDecoration.underline,
-                        decorationColor: corPrincipal,
+                        color: corCadastrar, // ALTERADO
+                        decorationColor: corCadastrar,
                       ),
                     ),
                   ),
