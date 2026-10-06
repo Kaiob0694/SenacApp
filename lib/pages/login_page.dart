@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
     final Color corFundo = professorSelecionado ? laranja : Colors.white;
 
     // Borda dos campos: azul no Professor, laranja no Aluno
-    final Color corBorda = professorSelecionado ? azul : laranja;
+    final Color corBorda = professorSelecionado ? const Color.fromARGB(255, 255, 255, 255) : laranja;
 
     // Texto digitado e dica dos campos (laranja no Professor)
     final Color corTextoCampo = professorSelecionado ? laranja : azul;
@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                   // ESPAÇO EXTRA PARA DESCER O LOGO
                   // ==========================================
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 44),
 
                   // ==========================================
                   // LOGO (troca conforme Aluno / Professor)
