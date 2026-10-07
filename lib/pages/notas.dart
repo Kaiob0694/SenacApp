@@ -13,7 +13,7 @@ class NotasPage extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: const Center(
-        child: Text('Aqui vão as suas notas'),
+        child: Text('VAMOS TRABALHAR JOÃO'),
       ),
     );
   }
