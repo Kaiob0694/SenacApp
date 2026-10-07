@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'telas.dart';
+import 'notas.dart';
 
 class SegundaTela extends StatelessWidget {
   const SegundaTela({super.key});
@@ -17,7 +19,7 @@ class SegundaTela extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(),
+              _buildHeader(context),
               const SizedBox(height: 28),
               _buildMenu(context),
             ],
@@ -27,14 +29,19 @@ class SegundaTela extends StatelessWidget {
     );
   }
 
+  // Navegação genérica para qualquer tela
+  void _abrir(BuildContext context, Widget tela) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => tela));
+  }
+
   // Cabeçalho: foto + "Olá, Kaio" + sino + engrenagem
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
         const CircleAvatar(
           radius: 28,
           backgroundColor: Colors.grey,
-          // Troque pela sua imagem: AssetImage('assets/perfil.png')
+          // Troque pela sua imagem: backgroundImage: AssetImage('assets/perfil.png')
           child: Icon(Icons.person, color: Colors.white, size: 32),
         ),
         const SizedBox(width: 12),
@@ -50,12 +57,14 @@ class SegundaTela extends StatelessWidget {
         const Icon(Icons.keyboard_arrow_down, color: Colors.black87, size: 20),
         const Spacer(),
         IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_none, color: laranjaEscuro, size: 28),
+          onPressed: () => _abrir(context, const NotificacoesPage()),
+          icon: const Icon(Icons.notifications_none,
+              color: laranjaEscuro, size: 28),
         ),
         IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.settings_outlined, color: laranjaEscuro, size: 28),
+          onPressed: () => _abrir(context, const ConfiguracoesPage()),
+          icon: const Icon(Icons.settings_outlined,
+              color: laranjaEscuro, size: 28),
         ),
       ],
     );
@@ -66,10 +75,14 @@ class SegundaTela extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _menuItem(Icons.edit_note, 'Notas', () {}),
-        _menuItem(Icons.percent, 'Frequência', () {}),
-        _menuItem(Icons.folder_shared_outlined, 'Comunicados', () {}),
-        _menuItem(Icons.folder_shared_outlined, 'Atividades', () {}),
+        _menuItem(Icons.edit_note, 'Notas',
+            () => _abrir(context, const NotasPage())),
+        _menuItem(Icons.percent, 'Frequência',
+            () => _abrir(context, const FrequenciaPage())),
+        _menuItem(Icons.folder_shared_outlined, 'Comunicados',
+            () => _abrir(context, const ComunicadosPage())),
+        _menuItem(Icons.folder_shared_outlined, 'Atividades',
+            () => _abrir(context, const AtividadesPage())),
       ],
     );
   }
