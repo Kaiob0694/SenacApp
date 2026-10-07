@@ -3,11 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'telas.dart';
 import 'notas.dart';
 
-class SegundaTela extends StatelessWidget {
+class SegundaTela extends StatefulWidget {
   const SegundaTela({super.key});
 
+  @override
+  State<SegundaTela> createState() => _SegundaTelaState();
+}
+
+class _SegundaTelaState extends State<SegundaTela> {
   static const Color laranja = Color(0xFFF29C00);
   static const Color laranjaEscuro = Color(0xFFF2711C);
+
+  int _indiceAtual = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +33,7 @@ class SegundaTela extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: _buildBottomBar(),
     );
   }
 
@@ -121,6 +129,28 @@ class SegundaTela extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  // Barra inferior
+  Widget _buildBottomBar() {
+    return BottomNavigationBar(
+      currentIndex: _indiceAtual,
+      onTap: (i) => setState(() => _indiceAtual = i),
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.white,
+      selectedItemColor: laranjaEscuro,
+      unselectedItemColor: Colors.black38,
+      selectedLabelStyle: GoogleFonts.poppins(fontSize: 11),
+      unselectedLabelStyle: GoogleFonts.poppins(fontSize: 11),
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Início'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_outlined), label: 'Agenda'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline), label: 'Mensagens'),
+        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Perfil'),
+      ],
     );
   }
 }
