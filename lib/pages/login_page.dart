@@ -63,9 +63,9 @@ class _LoginPageState extends State<LoginPage> {
                 width: largura,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 450),
-                  decoration: BoxDecoration(
+                  decoration: BoxDecoration(                    
                     color: tipoUsuario == 'Aluno'
-                        ? const Color(0xFF244977)
+                        ? const Color(0xFFF29C00)
                         : const Color(0xFFF29C00),
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                           duration: const Duration(milliseconds: 300),
                           style: GoogleFonts.inter(
                             fontSize: 13,
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.w500,
                             color: tipoUsuario == 'Aluno'
                                 ? Colors.white
                                 : const Color(0xFFF29C00),
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                           duration: const Duration(milliseconds: 300),
                           style: GoogleFonts.inter(
                             fontSize: 13,
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.w500,
                             color: tipoUsuario == 'Professor'
                                 ? Colors.white
                                 : const Color(0xFFF29C00),
