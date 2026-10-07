@@ -21,12 +21,7 @@ class _TelaBase extends StatelessWidget {
   }
 }
 
-class FrequenciaPage extends StatelessWidget {
-  const FrequenciaPage({super.key});
 
-  @override
-  Widget build(BuildContext context) => const _TelaBase(titulo: 'Frequência');
-}
 
 class ComunicadosPage extends StatelessWidget {
   const ComunicadosPage({super.key});

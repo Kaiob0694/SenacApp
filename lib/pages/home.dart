@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'telas.dart';
 import 'notas.dart';
+import 'frequencia.dart';
 
 class SegundaTela extends StatefulWidget {
   const SegundaTela({super.key});
