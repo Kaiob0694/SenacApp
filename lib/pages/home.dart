@@ -43,12 +43,12 @@ class _SegundaTelaState extends State<SegundaTela> {
     );
   }
 
-  // Navegação genérica para qualquer tela
+  
   void _abrir(BuildContext context, Widget tela) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => tela));
   }
 
-  // Cabeçalho: foto + "Olá, Kaio" + sino + engrenagem
+  
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
@@ -136,7 +136,7 @@ class _SegundaTelaState extends State<SegundaTela> {
     );
   }
 
-  // Banner com imagem + informações (logo abaixo dos 4 botões)
+  
   Widget _buildBannerInfo() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
