@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'telas.dart';
 import 'notas.dart';
 import 'frequencia.dart';
+import 'comunicados.dart';
+import 'notificacao.dart';
+import 'atividades.dart';
+import 'configuracao.dart';
 
 class SegundaTela extends StatefulWidget {
   const SegundaTela({super.key});
@@ -22,7 +25,7 @@ class _SegundaTelaState extends State<SegundaTela> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,6 +33,8 @@ class _SegundaTelaState extends State<SegundaTela> {
               _buildHeader(context),
               const SizedBox(height: 28),
               _buildMenu(context),
+              const SizedBox(height: 24),
+              _buildBannerInfo(),
             ],
           ),
         ),
@@ -49,9 +54,7 @@ class _SegundaTelaState extends State<SegundaTela> {
       children: [
         const CircleAvatar(
           radius: 28,
-          backgroundColor: Colors.grey,
-          // Troque pela sua imagem: backgroundImage: AssetImage('assets/perfil.png')
-          child: Icon(Icons.person, color: Colors.white, size: 32),
+          backgroundImage: AssetImage('assets/perfil.png'),
         ),
         const SizedBox(width: 12),
         Text(
@@ -128,6 +131,89 @@ class _SegundaTelaState extends State<SegundaTela> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  // Banner com imagem + informações (logo abaixo dos 4 botões)
+  Widget _buildBannerInfo() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: Container(
+        width: double.infinity,
+        height: 190,
+        decoration: const BoxDecoration(color: laranja),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/banner.jpg',
+              fit: BoxFit.cover,
+              // Se a imagem não existir, mostra um fundo laranja com ícone
+              errorBuilder: (context, error, stackTrace) => Container(
+                color: laranja,
+                child: const Icon(Icons.image_outlined,
+                    color: Colors.white54, size: 64),
+              ),
+            ),
+
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.65),
+                  ],
+                ),
+              ),
+            ),
+            // Informações sobre a imagem
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: laranjaEscuro,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      'AVISO',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Semana de Provas',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'De 14 a 18 de outubro. Confira o calendário completo na Agenda.',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
